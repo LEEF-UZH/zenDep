@@ -33,7 +33,7 @@ zen_deposit <- function(
 
     data_dir = "./tmp",
 
-    metadata_bib = zen_metadata_bib(),
+    metadata_bib = leef_metadata_bib(),
 
     publish = FALSE,
     sandbox = TRUE

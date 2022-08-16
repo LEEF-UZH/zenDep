@@ -28,7 +28,7 @@
 #'
 #' @export
 #'
-zen_metadata_bib <- function(
+leef_metadata_bib <- function(
     community = "leef-uzh",
     upload_type = "dataset",
     authors = list(

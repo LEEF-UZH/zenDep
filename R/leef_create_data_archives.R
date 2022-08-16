@@ -8,7 +8,7 @@
 #' @return names of the created data zip archives
 #' @export
 #'
-zen_create_data_archives <- function(
+leef_create_data_archives <- function(
     to_dir = ".",
     archive_dir = "~/Duck/LEEFSwift3",
     timestamp,
