@@ -7,8 +7,8 @@
 zen_create_data_archives(
   to_dir = ".",
   archive_dir = "~/Duck/LEEFSwift3",
-  timestamp,
-  stage = c("pre_processed", "extracted")
+  stage,
+  cores = 4
 )
 }
 \arguments{
@@ -16,9 +16,9 @@ zen_create_data_archives(
 
 \item{archive_dir}{base directory of the data archive}
 
-\item{timestamp}{timestamp to be uploaded}
+\item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted"}}
 
-\item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"}}
+\item{cores}{number of cores to be used for the parallel compression}
 }
 \value{
 names of the created data zip archives

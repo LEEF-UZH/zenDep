@@ -3,6 +3,7 @@
 export(zen_create_data_archives)
 export(zen_deposit)
 export(zen_metadata_bib)
+importFrom(parallel,mclapply)
 importFrom(utils,zip)
 importFrom(zen4R,ZenodoManager)
 importFrom(zen4R,ZenodoRecord)

@@ -43,6 +43,11 @@
     },
     "2": {
       "@type": "SoftwareApplication",
+      "identifier": "parallel",
+      "name": "parallel"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
       "identifier": "zen4R",
       "name": "zen4R",
       "provider": {
@@ -55,5 +60,6 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "14.604KB"
+  "fileSize": "14.816KB",
+  "codeRepository": "https://github.com/LEEF-UZH/zenDep"
 }
