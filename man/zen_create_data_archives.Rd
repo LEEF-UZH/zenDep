@@ -7,7 +7,7 @@
 zen_create_data_archives(
   to_dir = ".",
   archive_dir = "~/Duck/LEEFSwift3",
-  stage,
+  stage = c("pre_processed", "extracted"),
   cores = 4
 )
 }
@@ -16,7 +16,7 @@ zen_create_data_archives(
 
 \item{archive_dir}{base directory of the data archive}
 
-\item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted"}}
+\item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}}
 
 \item{cores}{number of cores to be used for the parallel compression}
 }

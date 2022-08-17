@@ -44,20 +44,24 @@ zen_create_data_archives <- function(
     # zip -9X ~/tmp/data_20220406.zip  *.20220406/*
 
     olddir <- getwd()
-    f <- file.path(tempfile())
     result <- NULL
     on.exit(
       {
         setwd(olddir)
+        if (is.null(result)){
+          unlink(zipfile)
+        }
         return(result)
       }
     )
 
-    f <- file.path(tempfile())
-    dir.create(f)
-    f <- file.path(f, "data.zip")
+
+    dir.create(dirname(zipfile), showWarnings = FALSE, recursive = TRUE)
+
 
     setwd(file.path(datapath))
+
+    browser()
 
     utils::zip(
       zipfile = zipfile,
@@ -105,6 +109,7 @@ zen_create_data_archives <- function(
   result <- parallel::mclapply(
     archives,
     function(x) {
+      message("processing ", x$timestamp, x$zipfile)
       comp(
         datapath = datapath,
         timestamp = x$timestamp,
