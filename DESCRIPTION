@@ -1,7 +1,7 @@
 Package: zenDep
 Type: Package
 Title: Handling of Archives on Zenodo
-Version: 0.2.2
+Version: 0.2.1
 Authors@R: c(
   person(given = "Rainer M.", family = "Krug", email = "Rainer.Krug@uzh.ch", role = c("aut", "cre")),
   person("SNF Project 310030_188431", role = "fnd")
