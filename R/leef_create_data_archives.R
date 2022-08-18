@@ -7,7 +7,7 @@
 #'
 #' @return names of the created data zip archives
 #'
-#' @importFrom parallel mclapply
+#' @importFrom pbmcapply pbmclapply
 #' @export
 #'
 leef_create_data_archives <- function(
@@ -61,8 +61,6 @@ leef_create_data_archives <- function(
 
     setwd(file.path(datapath))
 
-    browser()
-
     utils::zip(
       zipfile = zipfile,
       flags = "-9X",
@@ -86,7 +84,7 @@ leef_create_data_archives <- function(
   timestamps <- gsub("^(.*?)\\.302", "302", timestamps)
   timestamps <- unique(timestamps)
 
-  archives <- parallel::mclapply(
+  archives <- pbmcapply::pbmclapply(
     timestamps,
     function(timestamp){
       list(

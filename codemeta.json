@@ -44,8 +44,15 @@
     },
     "2": {
       "@type": "SoftwareApplication",
-      "identifier": "parallel",
-      "name": "parallel"
+      "identifier": "pbmcapply",
+      "name": "pbmcapply",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=pbmcapply"
     },
     "3": {
       "@type": "SoftwareApplication",
@@ -61,5 +68,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "15.136KB"
+  "fileSize": "15.131KB"
 }

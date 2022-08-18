@@ -16,6 +16,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
   utils,
-  parallel,
+  pbmcapply,
   zen4R
 RoxygenNote: 7.2.1
