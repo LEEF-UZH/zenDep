@@ -3,6 +3,7 @@
 export(leef_create_data_archives)
 export(leef_metadata_bib)
 export(zen_deposit)
+importFrom(parallel,mclapply)
 importFrom(utils,zip)
 importFrom(zen4R,ZenodoManager)
 importFrom(zen4R,ZenodoRecord)
