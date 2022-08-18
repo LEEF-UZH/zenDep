@@ -69,7 +69,7 @@ leef_create_data_archives <- function(
         dir.create(file.path(tmpf, fn), recursive = TRUE, showWarnings = FALSE)
         file.copy(
           from = file.path(datapath, fn),
-          to = file.path(tmpf, fn),
+          to = file.path(tmpf),
           recursive = TRUE,
           overwrite = TRUE
         )
@@ -124,7 +124,7 @@ leef_create_data_archives <- function(
 
   # Compress all timestamps --------------------------------------------------
 
-  result <- parallel::mclapply(
+  result <- pbmcapply::pbmclapply(
     archives,
     function(x) {
       message("processing ", x$timestamp, x$zipfile)
