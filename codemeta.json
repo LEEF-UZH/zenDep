@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/LEEF-UZH/zenDep",
   "issueTracker": "https://github.com/LEEF-UZH/zenDep/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -68,5 +68,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "15.131KB"
+  "fileSize": "15.204KB"
 }

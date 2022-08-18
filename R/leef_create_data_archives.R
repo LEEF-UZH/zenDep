@@ -36,11 +36,12 @@ leef_create_data_archives <- function(
     stop("stage has to be pre_processed or extracted!")
   }
 
+  to_dir <- normalizePath(to_dir)
 
   # Helper function - comp --------------------------------------------------
 
 
-  comp <- function(datapath, timestamp, zipfile){
+  comp <- function(datapath, files, zipfile){
     # zip -9X ~/tmp/data_20220406.zip  *.20220406/*
 
     olddir <- getwd()
@@ -55,16 +56,14 @@ leef_create_data_archives <- function(
       }
     )
 
-
     dir.create(dirname(zipfile), showWarnings = FALSE, recursive = TRUE)
-
 
     setwd(file.path(datapath))
 
     utils::zip(
       zipfile = zipfile,
-      flags = "-9X",
-      files = file.path(".", paste0("*.", timestamp), "*")
+      extras = "-q",
+      files = files
     )
     result <- zipfile
   }
@@ -84,7 +83,8 @@ leef_create_data_archives <- function(
   timestamps <- gsub("^(.*?)\\.302", "302", timestamps)
   timestamps <- unique(timestamps)
 
-  archives <- pbmcapply::pbmclapply(
+  message("Setting up compression")
+  archives <- lapply(
     timestamps,
     function(timestamp){
       list(
@@ -96,21 +96,22 @@ leef_create_data_archives <- function(
             timestamp, ".",
             "zip"
           )
-        )
+        ),
+        files = grep(pattern = timestamp, x = dirs, value = TRUE)
       )
     }
   )
 
 
-  # Archive all timestamps --------------------------------------------------
+  # Compress all timestamps --------------------------------------------------
 
-  result <- parallel::mclapply(
+  result <- pbmcapply::pbmclapply(
     archives,
     function(x) {
       message("processing ", x$timestamp, x$zipfile)
       comp(
         datapath = datapath,
-        timestamp = x$timestamp,
+        files = x$files,
         zipfile = x$zipfile
       )
     },
