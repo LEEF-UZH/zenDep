@@ -44,6 +44,9 @@ leef_create_data_archives <- function(
   comp <- function(datapath, files, zipfile){
     # zip -9X ~/tmp/data_20220406.zip  *.20220406/*
 
+    tmpf <- tempfile()
+    dir.create(tmpf)
+
     olddir <- getwd()
     result <- NULL
     on.exit(
@@ -52,14 +55,30 @@ leef_create_data_archives <- function(
         if (is.null(result)){
           unlink(zipfile)
         }
+        if (file.exists(tmpf)) {
+          unlink(tmpf, recursive = TRUE)
+        }
         return(result)
       }
     )
-
     dir.create(dirname(zipfile), showWarnings = FALSE, recursive = TRUE)
+    lapply(
+      files,
+      function(fn){
+        message("Copying ", fn, "...")
+        dir.create(file.path(tmpf, fn), recursive = TRUE, showWarnings = FALSE)
+        file.copy(
+          from = file.path(datapath, fn),
+          to = file.path(tmpf, fn),
+          recursive = TRUE,
+          overwrite = TRUE
+        )
+        message("    Done Copying ", fn)
+      }
+    )
 
-    setwd(file.path(datapath))
 
+    setwd(file.path(tmpf))
     utils::zip(
       zipfile = zipfile,
       extras = "-q",
@@ -105,7 +124,7 @@ leef_create_data_archives <- function(
 
   # Compress all timestamps --------------------------------------------------
 
-  result <- pbmcapply::pbmclapply(
+  result <- parallel::mclapply(
     archives,
     function(x) {
       message("processing ", x$timestamp, x$zipfile)
