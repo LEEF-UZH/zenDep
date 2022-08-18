@@ -1,4 +1,4 @@
-#' Title
+#' Create the data packages from the LEEF project.
 #'
 #' @param to_dir directory in which the compressed data folders should be saved to
 #' @param archive_dir base directory of the data archive
@@ -22,7 +22,7 @@ leef_create_data_archives <- function(
     lapply(
       stage,
       function(s) {
-        zen_create_data_archives(
+        leef_create_data_archives(
           to_dir = to_dir,
           archive_dir = archive_dir,
           stage = s,

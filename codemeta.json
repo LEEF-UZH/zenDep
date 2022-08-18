@@ -2,11 +2,12 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "zenDep",
-  "description": "This package handles the deposits of data on Zenodo. It is using \\codeZen4R to do the real work and is mainly a wrapper around it for convenience.",
-  "name": "zenDep: Handling of archives on Zenodo",
-  "issueTracker": "",
+  "description": "Deposits of data on Zenodo. It is using \\codeZen4R to do the real work and is mainly a wrapper around it for convenience. At the moment, aimed at the data from the LEEF project.",
+  "name": "zenDep: Handling of Archives on Zenodo",
+  "codeRepository": "https://github.com/LEEF-UZH/zenDep",
+  "issueTracker": "https://github.com/LEEF-UZH/zenDep/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -60,6 +61,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "15.323KB",
-  "codeRepository": "https://github.com/LEEF-UZH/zenDep"
+  "fileSize": "15.136KB"
 }

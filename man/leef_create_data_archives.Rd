@@ -2,7 +2,7 @@
 % Please edit documentation in R/leef_create_data_archives.R
 \name{leef_create_data_archives}
 \alias{leef_create_data_archives}
-\title{Title}
+\title{Create the data packages from the LEEF project.}
 \usage{
 leef_create_data_archives(
   to_dir = ".",
@@ -24,5 +24,5 @@ leef_create_data_archives(
 names of the created data zip archives
 }
 \description{
-Title
+Create the data packages from the LEEF project.
 }

@@ -1,16 +1,17 @@
 Package: zenDep
 Type: Package
-Title: Handling of archives on Zenodo
-Version: 0.1.0
+Title: Handling of Archives on Zenodo
+Version: 0.2.0
 Authors@R: c(
   person(given = "Rainer M.", family = "Krug", email = "Rainer.Krug@uzh.ch", role = c("aut", "cre")),
   person("SNF Project 310030_188431", role = "fnd")
   )
 Maintainer: Rainer M. Krug <Rainer.Krug@uzh.ch>
-BugReports:
-URL:
-Description: This package handles the deposits of data on Zenodo.
+BugReports: https://github.com/LEEF-UZH/zenDep/issues
+URL: https://github.com/LEEF-UZH/zenDep
+Description: Deposits of data on Zenodo.
   It is using \code{Zen4R} to do the real work and is mainly a wrapper around it for convenience.
+  At the moment, aimed at the data from the LEEF project.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
