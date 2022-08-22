@@ -3,7 +3,7 @@
 #' @param to_dir directory in which the compressed data folders should be saved to
 #' @param archive_dir base directory of the data archive
 #' @param stage stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}
-#' @param cores number of cores to be used for the parallel compression
+#' @param cores number of cores to be used for the parallel compression (default is one due to limits in connection)
 #'
 #' @return names of the created data zip archives
 #'
@@ -14,7 +14,7 @@ leef_create_data_archives <- function(
     to_dir = ".",
     archive_dir = "~/Duck/LEEFSwift3",
     stage = c("pre_processed", "extracted"),
-    cores = 4
+    cores = 1
 ){
 
 
@@ -84,7 +84,7 @@ leef_create_data_archives <- function(
   timestamps <- unique(timestamps)
 
   message("Setting up compression")
-  archives <- lapply(
+  archives <- pbmcapply::pbmclapply(
     timestamps,
     function(timestamp){
       list(
@@ -99,7 +99,8 @@ leef_create_data_archives <- function(
         ),
         files = grep(pattern = timestamp, x = dirs, value = TRUE)
       )
-    }
+    },
+    mc.cores = cores
   )
 
 

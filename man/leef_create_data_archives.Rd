@@ -8,7 +8,7 @@ leef_create_data_archives(
   to_dir = ".",
   archive_dir = "~/Duck/LEEFSwift3",
   stage = c("pre_processed", "extracted"),
-  cores = 4
+  cores = 1
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ leef_create_data_archives(
 
 \item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}}
 
-\item{cores}{number of cores to be used for the parallel compression}
+\item{cores}{number of cores to be used for the parallel compression (default is one due to limits in connection)}
 }
 \value{
 names of the created data zip archives
