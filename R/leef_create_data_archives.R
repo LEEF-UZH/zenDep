@@ -106,7 +106,7 @@ leef_create_data_archives <- function(
 
   # Compress all timestamps --------------------------------------------------
 
-  message("\nProcessing ", nrows(x), " directories - this will take some time!\n")
+  message("\nProcessing ", nrow(archives), " directories - this will take some time!\n")
   result <- pbmcapply::pbmclapply(
     archives,
     function(x) {
