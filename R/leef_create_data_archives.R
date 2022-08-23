@@ -83,7 +83,7 @@ leef_create_data_archives <- function(
   timestamps <- gsub("^(.*?)\\.302", "302", timestamps)
   timestamps <- unique(timestamps)
 
-  message("Setting up compression")
+  message("\nSetting up compression\n")
   archives <- pbmcapply::pbmclapply(
     timestamps,
     function(timestamp){
@@ -106,10 +106,10 @@ leef_create_data_archives <- function(
 
   # Compress all timestamps --------------------------------------------------
 
+  message("\nProcessing ", nrows(x), " directories - this will take some time!\n")
   result <- pbmcapply::pbmclapply(
     archives,
     function(x) {
-      message("processing ", x$timestamp, x$zipfile)
       comp(
         datapath = datapath,
         files = x$files,
