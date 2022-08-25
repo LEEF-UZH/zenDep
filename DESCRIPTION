@@ -17,5 +17,5 @@ Encoding: UTF-8
 Imports:
   utils,
   pbmcapply,
-  zen4R
+  zen4R (>= 0.7)
 RoxygenNote: 7.2.1

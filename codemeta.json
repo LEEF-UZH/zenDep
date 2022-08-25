@@ -58,6 +58,7 @@
       "@type": "SoftwareApplication",
       "identifier": "zen4R",
       "name": "zen4R",
+      "version": ">= 0.7",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -68,5 +69,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "15.371KB"
+  "fileSize": "15.38KB"
 }
