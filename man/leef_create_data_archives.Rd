@@ -24,5 +24,5 @@ leef_create_data_archives(
 names of the created data zip archives
 }
 \description{
-Create the data packages from the LEEF project.
+The data packages contain only of the respective data, bundled in a zipped file.
 }

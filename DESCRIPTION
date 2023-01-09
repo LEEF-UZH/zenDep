@@ -14,8 +14,10 @@ Description: Deposits of data on Zenodo.
   At the moment, aimed at the data from the LEEF project.
 License: MIT + file LICENSE
 Encoding: UTF-8
+Depends:
+    R (>= 4.1.0)
 Imports:
   utils,
   pbmcapply,
   zen4R (>= 0.7)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3

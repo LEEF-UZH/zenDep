@@ -5,8 +5,8 @@
 \title{Deposit data on Zenodo}
 \usage{
 zen_deposit(
-  token = NULL,
   timestamp,
+  token = NULL,
   data_dir = "./tmp",
   metadata_bib = leef_metadata_bib(),
   publish = FALSE,
@@ -14,9 +14,9 @@ zen_deposit(
 )
 }
 \arguments{
-\item{token}{Zenodo token to upload the deposit}
-
 \item{timestamp}{timestamp to be uploaded}
+
+\item{token}{Zenodo token to upload the deposit}
 
 \item{data_dir}{directory in which the data to be deposited can be found}
 

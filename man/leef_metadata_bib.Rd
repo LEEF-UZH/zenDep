@@ -2,7 +2,7 @@
 % Please edit documentation in R/leef_metadata_bib.R
 \name{leef_metadata_bib}
 \alias{leef_metadata_bib}
-\title{Create list containing the bibligraphic metadata for the data deposit}
+\title{Create template list containing the bibliographic metadata for the data deposit}
 \usage{
 leef_metadata_bib(
   community = "leef-uzh",
@@ -63,5 +63,5 @@ is also a list with the following fields:
 list containing the metadata necessary for the data deposit
 }
 \description{
-Create list containing the bibligraphic metadata for the data deposit
+The list can be modified before usage.
 }

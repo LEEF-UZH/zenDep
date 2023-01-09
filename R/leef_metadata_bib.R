@@ -1,5 +1,6 @@
-#' Create list containing the bibligraphic metadata for the data deposit
+#' Create template list containing the bibliographic metadata for the data deposit
 #'
+#' The list can be modified before usage.
 #' @param community community to which the deposited data should be added
 #' @param upload_type type of the deposited data
 #' @param authors authors of the deposited data. Each contributor

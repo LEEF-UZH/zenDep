@@ -1,0 +1,178 @@
+---
+title: "Assemble and Upload pre-processed data"
+author: "Rainer M. Krug"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    code-overflow: scroll
+    code-fold: true
+    code-tools: true
+params:
+  stage: [pre_processed, extracted]
+  cores: 1
+  archive_dir: "/Volumes/LEEF/LEEF.archived.data/"
+  data_package_dir: "/Volumes/LEEF-1/LEEF-1 data packages"
+  assemble: FALSE
+  publish: FALSE
+  sandbox: TRUE
+---
+
+
+## Introduction
+
+This document assembles and publishes the pre-processed data and adds the metadata as defined in the function `metadata()` defined below.
+
+Depending on the settings of `assemble` and `publish`, the data is assembled and / or published in the Zenodo Sandbox (`sandbox: TRUE`) or in the Zenodo repository. This should only be enabled if absolutely sure that everything is complete for publication. Data will be published as **Embargoed** until **WHICH TIME?**.
+
+```{r}
+#| label: setup
+
+library(zenDep)
+```
+
+The following parameter will be used (explained later in the document):
+
+```{r}
+params
+```
+## Define metadata
+
+The function `metadata()` must not require any parameter and returns a list containing the metadata.
+```{r}
+#| label: define_metadata
+
+metadata <- function(){
+  leef_metadata_bib(
+    community = "leef-uzh",
+    upload_type = "dataset",
+    authors = list(
+      RMK = list(
+        firstname = "Rainer M",
+        lastname = "Krug",
+        affiliation = "University of Zurich",
+        orcid = "0000-0002-7490-0066"
+      ),
+      OLP = list(
+        firstname = "Owen L",
+        lastname = "Petchey",
+        affiliation = "University of Zurich",
+        orcid = "0000-0002-7724-1633"
+      )
+    ),
+    description = "Description of the data",
+    version = "1.0.0",
+    language = "eng",
+    keywords = c("LEEZ-UZH", "LEEF-1"),
+    access_right = "open",
+    license = "CC-BY-SA-4.0",
+    contributors = list(
+      RMK = list(
+        firstname = "Rainer M",
+        lastname = "Krug",
+        type = "DataManager",
+        affiliation = "University of Zurich",
+        orcid = "0000-0002-7490-0066"
+      ),
+      OLP = list(
+        firstname = "Owen L",
+        lastname = "Petchey",
+        type = "ProjectLeader",
+        affiliation = "University of Zurich",
+        orcid = "0000-0002-7724-1633"
+      )
+    )
+  )
+}
+```
+
+which will result in the following metadata for the deposits:
+
+```{r}
+metadata()
+```
+
+## Assemble data packages
+Now the data packages will be assembled and named accordingly if `parms$assemble == TRUE`. The original data is located in ``r params$archive_dir`` and saved in the directory ``r params$data_package_dir``. 
+All timestamps in ``r params$archive_dir`` will be processed using ``r params$cores`` cores as specified in the parameter `params$cores`.
+
+If `parms$assemble == FALSE`, nothing will be done and the data packaged will be expected in the directory ``r params$data_package_dir``.
+```{r}
+#| label: assemble_data_packages
+
+if (params$assemble) {
+  leef_create_data_archives(
+    to_dir = params$data_package_dir,
+    archive_dir = params$archive_dir,
+    stage = params$stage,
+    cores = params$cores
+  )
+}  
+```
+
+## Assemble data deposits and publish to Zenodo
+This syep finally combines the data deposits for the pre-processed data (metadata & data package) and the extracted data (metadata & data package), uploads them to Zenodo (if `params$sandbox == TRUE` to the sandbox, the value is ``r params$sandbox``), and adds the corresponding related DOIs.
+
+### Timestamps
+The following timestamps will be deposited
+```{r}
+#| label: determine_timestamps
+
+timestamps <- list.files(params$data_package_dir) |>
+  (\(.) substr(., start = nchar(.)-11, stop = nchar(.) - 4))() |>
+  unique()
+timestamps
+```
+
+### Check pre-processed data packages
+```{r}
+#| label: check_pre_processed 
+OK <- TRUE
+
+fe <- file.path(params$data_package_dir, paste0("data_pre_processed_", timestamps, ".zip")) |>
+  file.exists()
+if (all(fe)) {
+  pp_missing <- character(0)
+} else {
+  pp_missing <- paste0("data_pre_processed_", timestamps[!fe], ".zip")
+  print("Missing pre_processed data packages!")
+  print(pp_missing)
+  OK <- FALSE
+}
+rm(fe)
+```
+
+### Check extracted data packages
+```{r}
+#| label: check_extracted
+
+fe <- file.path(params$data_package_dir, paste0("data_extracted_", timestamps, ".zip")) |>
+  file.exists()
+if (all(fe)) {
+  ex_missing <- character(0)
+} else {
+  ex_missing <- paste0("data_extracted_", timestamps[!fe], ".zip")
+  print("Missing extracted data packages!")
+  print(ex_missing)
+  OK <- FALSE
+}
+rm(fe)
+```
+
+### Do the deposit
+```{r}
+#| label: deposit 
+if (OK) {
+  pbmcapply::pbmclapply(
+    X = timestamps,
+    FUN = zen_deposit,
+    token = NULL,
+    data_dir = params$data_package_dir,
+    metadata_bib = metadata(),
+    publish = params$publish,
+    sandbox = params$sandbox,
+    mc.cores = params$cores
+  )
+}
+```
+

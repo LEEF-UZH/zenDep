@@ -1,5 +1,6 @@
 #' Create the data packages from the LEEF project.
 #'
+#' The data packages contain only of the respective data, bundled in a zipped file.
 #' @param to_dir directory in which the compressed data folders should be saved to
 #' @param archive_dir base directory of the data archive
 #' @param stage stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}
