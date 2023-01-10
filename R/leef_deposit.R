@@ -16,7 +16,7 @@
 #'
 #' @export
 #'
-zen_deposit <- function(
+leef_deposit <- function(
     timestamp,
 
     token = NULL,
@@ -24,7 +24,7 @@ zen_deposit <- function(
 
     data_dir = "./tmp",
 
-    metadata_bib = leef_metadata_bib(),
+    metadata_bib = new_metadata_bib(),
 
     publish = FALSE,
     sandbox = TRUE
@@ -105,64 +105,29 @@ zen_deposit <- function(
     function(x){
 
 
-      # Create and populate records -------------------------------------------------
+      # Adapt metadata to leef standards ----------------------------------------
 
 
-      rec <- zen4R::ZenodoRecord$new()
-
-      rec$setUploadType(metadata_bib$upload_type)
-      title = paste0("LEEF Experiment ", x["stage"], " data from ", as.Date(timestamp, "%Y%m%d"))
-      rec$setTitle(title)
-      #   paste0(
-      #     "LEEF Experiment ", x["stage"], " data from ", as.Date(timestamp, "%Y%m%d")
-      #   )
-      # )
-      lapply(
-        metadata_bib$authors,
-        function(aut){
-          rec$addCreator(
-            firstname = aut$firstname,
-            lastname = aut$lastname,
-            affiliation = aut$affiliation,
-            orcid = aut$orcid
-          )
-        }
-      )
-      rec$setDescription(metadata_bib$description)
-      rec$setVersion(metadata_bib$version)
-      rec$setLanguage(metadata_bib$language)
-      keywords <- c(
+      metadata_bib$title <-  paste0("LEEF Experiment ", x["stage"], " data from ", as.Date(timestamp, "%Y%m%d"))
+      metadata_bib$keywords <- c(
         metadata_bib$keywords,
         x["stage"],
         paste0("timestamp_", timestamp),
         as.Date(timestamp, "%Y%m%d")
       )
-      rec$setKeywords(metadata_bib$keywords)
-      rec$setLicense(metadata_bib$license)
-      rec$setAccessRight(metadata_bib$access_right)
-      # rec$setGrants("654359") # eLTER
-      # rec$setGrants("871126") # eLTER-PPP
-      # rec$setGrants("871128") # eLTER-Plus
-      lapply(
-        metadata_bib$contributors,
-        function(con){
-          rec$addContributor(
-            firstname = con$firstname,
-            lastname = con$lastname,
-            type = con$type,
-            affiliation = con$affiliation,
-            orcid = con$orcid
-          )
-        }
-      )
 
-      x$rec <-  rec
+
+      # Create and populate records -------------------------------------------------
+
+
+      rec <- zen4R::ZenodoRecord$new()
+      rec <- addMetadata(rec, metadata_bib)
 
 
       # Upload records ----------------------------------------------------------
 
 
-      x$rec <- zenodo$depositRecord(x$rec)
+      x$rec <- zenodo$depositRecord(rec)
       x$doi <- x$rec$metadata$prereserve_doi$doi
 
 

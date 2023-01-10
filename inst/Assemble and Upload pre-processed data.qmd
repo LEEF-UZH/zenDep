@@ -9,10 +9,10 @@ format:
     code-fold: true
     code-tools: true
 params:
-  stage: [pre_processed, extracted]
-  cores: 1
-  archive_dir: "/Volumes/LEEF/LEEF.archived.data/"
-  data_package_dir: "/Volumes/LEEF-1/LEEF-1 data packages"
+  stage: [pre_processed]
+  cores: 7
+  archive_dir: "/Volumes/LEEF/LEEF-1.archived.data/"
+  data_package_dir: "/Volumes/LEEF/LEEF-1 data packages"
   assemble: FALSE
   publish: FALSE
   sandbox: TRUE
@@ -42,54 +42,46 @@ The function `metadata()` must not require any parameter and returns a list cont
 ```{r}
 #| label: define_metadata
 
-metadata <- function(){
-  leef_metadata_bib(
-    community = "leef-uzh",
-    upload_type = "dataset",
-    authors = list(
-      RMK = list(
-        firstname = "Rainer M",
-        lastname = "Krug",
-        affiliation = "University of Zurich",
-        orcid = "0000-0002-7490-0066"
-      ),
-      OLP = list(
-        firstname = "Owen L",
-        lastname = "Petchey",
-        affiliation = "University of Zurich",
-        orcid = "0000-0002-7724-1633"
-      )
-    ),
-    description = "Description of the data",
-    version = "1.0.0",
-    language = "eng",
-    keywords = c("LEEZ-UZH", "LEEF-1"),
-    access_right = "open",
-    license = "CC-BY-SA-4.0",
-    contributors = list(
-      RMK = list(
-        firstname = "Rainer M",
-        lastname = "Krug",
-        type = "DataManager",
-        affiliation = "University of Zurich",
-        orcid = "0000-0002-7490-0066"
-      ),
-      OLP = list(
-        firstname = "Owen L",
-        lastname = "Petchey",
-        type = "ProjectLeader",
-        affiliation = "University of Zurich",
-        orcid = "0000-0002-7724-1633"
-      )
-    )
-  )
-}
+metadata <- new_metadata_bib(
+  community = "leef-uzh",
+  upload_type = "dataset",
+  authors = list(
+    list( firstname = "Romana",    lastname = "Limberger",         affiliation = "University of Zurich", orcid = "0000-0002-9421-7520"),
+    list( firstname = "Uriah",     lastname = "Daugaard",          affiliation = "University of Zurich", orcid = "0000-0003-4092-717X"),
+    list( firstname = "Rainer M.", lastname = "Krug",              affiliation = "University of Zurich", orcid = "0000-0002-7490-0066"),
+    list( firstname = "Owen L.",   lastname = "Petchey",           affiliation = "University of Zurich", orcid = "0000-0002-7724-1633")
+  ),
+  description = "Description of the data",
+  version = "1.0.0",
+  language = "eng",
+  keywords = c("LEEZ-UZH", "LEEF-1"),
+  access_right = "embargoed",
+  embargo_date = as.Date("2030-01-13"),
+  license = "CC-BY-SA-4.0",
+  contributors = list(
+    list( firstname = "Anubhav",   lastname = "Gupta",             affiliation = "University of Zurich", orcid = "0000-0001-7977-9747", type = "DataCollector"),
+    list( firstname = "Debra",     lastname = "Zuppinger-Dingley", affiliation = "University of Zurich", orcid = "0000-0002-4573-0563", type = "DataCollector"),
+    list( firstname = "Frank",     lastname = "Pennekamp",         affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
+    list( firstname = "Martina",   lastname = "Jelic",             affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
+    list( firstname = "Owen L.",   lastname = "Petchey",           affiliation = "University of Zurich", orcid = "0000-0002-7724-1633", type = "ProjectLeader"), # << types TODO
+    list( firstname = "Rainer M.", lastname = "Krug",              affiliation = "University of Zurich", orcid = "0000-0002-7490-0066", type = c("DataCurator", "DataManager")),
+    list( firstname = "Romana",    lastname = "Limberger",         affiliation = "University of Zurich", orcid = "0000-0002-9421-7520", type = "ProjectLeader"), # << types TODO
+    list( firstname = "Sabina",    lastname = "Jyrkinen",          affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
+    list( firstname = "Seraina",   lastname = "Nohl",              affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
+    list( firstname = "Sofia J.",  lastname = "van Moorsel",       affiliation = "University of Zurich", orcid = "0000-0003-1947-8971", type = "DataCollector"),
+    list( firstname = "Uriah",     lastname = "Daugaard",          affiliation = "University of Zurich", orcid = "0000-0003-4092-717X", type = "ProjectLeader"), # << types TODO
+    list( firstname = "Yves",      lastname = "Choffat",           affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
+    list( firstname = "Zheng",     lastname = "Xue",               affiliation = "University of Zurich", orcid = "",                    type = "DataCollector")
+  ),
+  grants = "10.13039/501100001711::310030_188431"
+)
+
 ```
 
 which will result in the following metadata for the deposits:
 
 ```{r}
-metadata()
+metadata
 ```
 
 ## Assemble data packages

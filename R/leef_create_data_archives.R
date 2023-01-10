@@ -75,7 +75,8 @@ leef_create_data_archives <- function(
 
   datapath  <- file.path(
     archive_dir,
-    "LEEF.archived.data/LEEF/3.archived.data",
+    "LEEF",
+    "3.archived.data",
     stage
   )
 

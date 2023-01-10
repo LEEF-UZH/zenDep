@@ -19,5 +19,5 @@ Depends:
 Imports:
   utils,
   pbmcapply,
-  zen4R (>= 0.7)
+  zen4R (>= 0.7.1)
 RoxygenNote: 7.2.3
