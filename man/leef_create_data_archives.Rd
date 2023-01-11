@@ -6,7 +6,8 @@
 \usage{
 leef_create_data_archives(
   to_dir = ".",
-  archive_dir = "~/Duck/LEEFSwift3",
+  data_dir = "~/Duck/LEEFSwift3/LEEF/3.archived.data",
+  metadata_dir = "/Volumes/LEEF/LEEF-1.metadata",
   stage = c("pre_processed", "extracted"),
   cores = 1
 )
@@ -14,7 +15,7 @@ leef_create_data_archives(
 \arguments{
 \item{to_dir}{directory in which the compressed data folders should be saved to}
 
-\item{archive_dir}{base directory of the data archive}
+\item{data_dir}{base directory of the data archive}
 
 \item{stage}{stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}}
 

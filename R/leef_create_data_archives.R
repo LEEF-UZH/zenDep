@@ -2,7 +2,7 @@
 #'
 #' The data packages contain only of the respective data, bundled in a zipped file.
 #' @param to_dir directory in which the compressed data folders should be saved to
-#' @param archive_dir base directory of the data archive
+#' @param data_dir base directory of the data archive
 #' @param stage stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}
 #' @param cores number of cores to be used for the parallel compression (default is one due to limits in connection)
 #'
@@ -13,7 +13,8 @@
 #'
 leef_create_data_archives <- function(
     to_dir = ".",
-    archive_dir = "~/Duck/LEEFSwift3",
+    data_dir = "~/Duck/LEEFSwift3/LEEF/3.archived.data",
+    metadata_dir = "/Volumes/LEEF/LEEF-1.metadata",
     stage = c("pre_processed", "extracted"),
     cores = 1
 ){
@@ -25,8 +26,8 @@ leef_create_data_archives <- function(
       function(s) {
         leef_create_data_archives(
           to_dir = to_dir,
-          archive_dir = archive_dir,
-          stage = s,
+          data_dir = data_dir,
+          stage = stage,
           cores = cores
         )
       }
@@ -74,9 +75,7 @@ leef_create_data_archives <- function(
 
 
   datapath  <- file.path(
-    archive_dir,
-    "LEEF",
-    "3.archived.data",
+    data_dir,
     stage
   )
 

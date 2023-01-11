@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/LEEF-UZH/zenDep",
   "issueTracker": "https://github.com/LEEF-UZH/zenDep/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -39,10 +39,16 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 4.1.0"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
-    "2": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "pbmcapply",
       "name": "pbmcapply",
@@ -54,11 +60,23 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=pbmcapply"
     },
-    "3": {
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "yaml",
+      "name": "yaml",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=yaml"
+    },
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "zen4R",
       "name": "zen4R",
-      "version": ">= 0.7",
+      "version": ">= 0.7.1",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -69,5 +87,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "15.38KB"
+  "fileSize": "661.465KB"
 }

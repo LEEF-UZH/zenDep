@@ -6,16 +6,16 @@
 \usage{
 new_metadata_bib(
   title = "Some Title",
+  description = "Description of the data",
+  keywords = c("LEEZ-UZH", "LEEF-1"),
   community = "leef-uzh",
   upload_type = "dataset",
   authors = list(RMK = list(firstname = "Rainer M", lastname = "Krug", affiliation =
     "University of Zurich", orcid = "0000-0002-7490-0066"), OLP = list(firstname =
     "Owen L", lastname = "Petchey", affiliation = "University of Zurich", orcid =
     "0000-0002-7724-1633")),
-  description = "Description of the data",
   version = "1.0.0",
   language = "eng",
-  keywords = c("LEEZ-UZH", "LEEF-1"),
   access_right = "embargoed",
   embargo_date = as.Date("2030-01-13"),
   license = "CC-BY-SA-4.0",
@@ -28,43 +28,52 @@ new_metadata_bib(
 )
 }
 \arguments{
-\item{community}{community to which the deposited data should be added}
+\item{title}{title of the deposit}
+
+\item{description}{description of the deposited data}
+
+\item{keywords}{\code{character} vector with keywords}
 
 \item{upload_type}{type of the deposited data}
 
-\item{authors}{authors of the deposited data. Each contributor
-is also a list with the following fields:
+\item{authors}{authors of the deposited data. Each contributor is also a list
+with the following fields:
 \itemize{
 \item firstname
 \item lastname
 \item affiliation
 \item orcid
 }}
-
-\item{description}{description of the deposited data}
 
 \item{version}{version of the deposited data}
 
 \item{language}{language of the deposited data}
 
-\item{keywords}{keywords}
-
 \item{access_right}{access right of the deposited data}
 
 \item{license}{license of the deposited data}
 
-\item{contributors}{list of contributors of the deposited data. Each contributor
-is also a list with the following fields:
+\item{contributors}{list of contributors of the deposited data. Each
+contributor is also a list with the following fields:
 \itemize{
 \item firstname
 \item lastname
-\item type: the role. This can be a character with multiple values which will be expanded for submission to Zenodo
+\item type: the role. This \code{character} vector can have multiple values which will
+be expanded for submission to Zenodo
 \item affiliation
 \item orcid
 }}
+
+\item{communities}{\code{character} vector containing the community idsto which
+the deposited data should be added to,}
+
+\item{embargo_data}{date until which the data is embargoed if \code{access_right}
+is "embargoed"}
 }
 \value{
-list containing the metadata necessary for the data deposit
+object of class \code{metadata_bib} and \code{list}. It is used by the function
+\code{add_metadata_bib()} to be added to the record which will be deposited to
+Zenodo.
 }
 \description{
 Create list containing the bibligraphic metadata for the data deposit
