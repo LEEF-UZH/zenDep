@@ -12,10 +12,10 @@ format:
 params:
   prepare_stage: [pre_processed, extracted]
   cores: 7
-  data_dir: "/Volumes/LEEF/LEEF-1.archived.data/LEEF/3.archived.data"
+  data_dir: "/Volumes/LEEF-1_archive/LEEF.archived.data/"
   metadata_pre_processed: "~/git/LEEF/LEEF.metadata/metadata_pre_processed.zip"
   metadata_extracted: "~/git/LEEF/LEEF.metadata/metadata_extracted.zip"
-  data_package_dir: "/Volumes/LEEF/LEEF-1 data packages"
+  data_package_dir: "/Volumes/LEEF-1_archive/Data Packages/"
   prepare: FALSE
   publish: FALSE
   sandbox: TRUE
