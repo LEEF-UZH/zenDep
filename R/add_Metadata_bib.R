@@ -16,9 +16,8 @@
 #' @examples
 add_metadata_bib <- function(
     metadata_bib = new_metadata_bib(),
-    rec = zen4R::ZenodoRecord$new()
-){
-  if (!inherits(metadata_bib, "metadata_bib")){
+    rec = zen4R::ZenodoRecord$new()) {
+  if (!inherits(metadata_bib, "metadata_bib")) {
     stop("`metadata_bib` has to be an object of class `metadata_bib` as created by the function `new_metadata_bib()!")
   }
 
@@ -30,7 +29,7 @@ add_metadata_bib <- function(
   rec$setUploadType(metadata_bib$upload_type)
   lapply(
     metadata_bib$authors,
-    function(aut){
+    function(aut) {
       rec$addCreator(
         firstname = aut$firstname,
         lastname = aut$lastname,
@@ -46,7 +45,7 @@ add_metadata_bib <- function(
   rec$setLicense(metadata_bib$license)
   lapply(
     metadata_bib$contributors,
-    function(con){
+    function(con) {
       rec$addContributor(
         firstname = con$firstname,
         lastname = con$lastname,

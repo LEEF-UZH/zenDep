@@ -20,5 +20,7 @@ Imports:
   utils,
   pbmcapply,
   yaml,
-  zen4R (>= 0.7.1)
-RoxygenNote: 7.2.3
+  deposits (>= 0.2.1.046)
+Remotes: 
+  r-universe/deposits
+  RoxygenNote: 7.2.3

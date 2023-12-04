@@ -31,9 +31,7 @@ leef_deposit <- function(
     metadata_pre_processed,
     metadata_bib,
     publish = FALSE,
-    sandbox = TRUE
-){
-
+    sandbox = TRUE) {
   # For Safety during testing -----------------------------------------------
 
 
@@ -76,7 +74,7 @@ leef_deposit <- function(
 
   lapply(
     deposits,
-    function(x){
+    function(x) {
       if (!file.exists(x$data)) {
         stop("Data file for stage ", x$stage, " does not exist!")
       }
@@ -102,13 +100,11 @@ leef_deposit <- function(
 
   deposits <- lapply(
     deposits,
-    function(x){
-
-
+    function(x) {
       # Adapt metadata following leef standards ----------------------------------------
 
 
-      metadata_bib$title <-  paste0(title, " ", x["stage"], " data from ", as.Date(timestamp, "%Y%m%d"))
+      metadata_bib$title <- paste0(title, " ", x["stage"], " data from ", as.Date(timestamp, "%Y%m%d"))
       metadata_bib$keywords <- c(
         metadata_bib$keywords,
         x["stage"],
@@ -168,7 +164,7 @@ leef_deposit <- function(
   if (publish) {
     recs <- lapply(
       deposits,
-      function(x){
+      function(x) {
         zenodo$publishRecord(x$rec$id)
       }
     )
@@ -176,5 +172,3 @@ leef_deposit <- function(
 
   return(deposits)
 }
-
-

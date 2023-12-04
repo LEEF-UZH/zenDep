@@ -1,4 +1,3 @@
----
 title: "Assemble and Upload pre-processed data"
 author: "Rainer M. Krug"
 format: 
@@ -29,9 +28,13 @@ This document assembles and publishes the pre-processed data and adds the metada
 Depending on the settings of `prepare` and `publish`, the data is prepared and / or published in the Zenodo Sandbox (`sandbox: TRUE`) or in the Zenodo repository. This should only be enabled if absolutely sure that everything is complete for publication. Data will be published as **Embargoed** until **WHICH TIME?**.
 
 ```{r}
-#| label: setup
 
-library(zenDep)
+if (!exists("params")) {
+   params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/LEEF/additionalPackages/zenDep/inst/Assemble and Upload pre-processed data.qmd')$params
+}
+
+library(deposits)
+cli <- depositsClient$new (service = "zenodo", sandbox = params$sandbox)
 ```
 
 The following parameter will be used (explained later in the document):
@@ -49,36 +52,118 @@ It can be changed afterwards without generating a new DOI.
 metadata_bib <- new_metadata_bib(
   title = "LEEF-1 experiment",
   description = "Description of the data",
-  keywords = c("LEEZ-UZH", "LEEF-1"),
-  community = "leef-uzh",
-  upload_type = "dataset",
-  authors = list(
-    list( firstname = "Romana",    lastname = "Limberger",         affiliation = "University of Zurich", orcid = "0000-0002-9421-7520"),
-    list( firstname = "Uriah",     lastname = "Daugaard",          affiliation = "University of Zurich", orcid = "0000-0003-4092-717X"),
-    list( firstname = "Rainer M.", lastname = "Krug",              affiliation = "University of Zurich", orcid = "0000-0002-7490-0066"),
-    list( firstname = "Owen L.",   lastname = "Petchey",           affiliation = "University of Zurich", orcid = "0000-0002-7724-1633")
+  subject = list(
+    a = "LEEZ-UZH", 
+    b = "LEEF-1"
   ),
-  version = "1.0.0",
+  # keywords = c("LEEZ-UZH", "LEEF-1"),
+  # community = "leef-uzh",
+  # upload_type = "dataset",
+  creator = list(
+    list( 
+      name = "Romana Limberger",         
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-9421-7520"),
+    list( 
+      name = "Uriah Daugaard",          
+      affiliation = "University of Zurich", 
+      orcid = "0000-0003-4092-717X"),
+    list( 
+      name = "Rainer M. Krug",              
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-7490-0066"),
+    list( 
+      name = "Owen L. Petchey",           
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-7724-1633")
+  ),
+  # version = "1.0.0",
   language = "eng",
-  access_right = "embargoed",
-  embargo_date = as.Date("2030-01-13"),
+  accessRights = 'embargoed',
   license = "CC-BY-SA-4.0",
-  contributors = list(
-    list( firstname = "Anubhav",   lastname = "Gupta",             affiliation = "University of Zurich", orcid = "0000-0001-7977-9747", type = "DataCollector"),
-    list( firstname = "Debra",     lastname = "Zuppinger-Dingley", affiliation = "University of Zurich", orcid = "0000-0002-4573-0563", type = "DataCollector"),
-    list( firstname = "Frank",     lastname = "Pennekamp",         affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
-    list( firstname = "Martina",   lastname = "Jelic",             affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
-    list( firstname = "Owen L.",   lastname = "Petchey",           affiliation = "University of Zurich", orcid = "0000-0002-7724-1633", type = "ProjectLeader"), # << types TODO
-    list( firstname = "Rainer M.", lastname = "Krug",              affiliation = "University of Zurich", orcid = "0000-0002-7490-0066", type = c("DataCurator", "DataManager")),
-    list( firstname = "Romana",    lastname = "Limberger",         affiliation = "University of Zurich", orcid = "0000-0002-9421-7520", type = "ProjectLeader"), # << types TODO
-    list( firstname = "Sabina",    lastname = "Jyrkinen",          affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
-    list( firstname = "Seraina",   lastname = "Nohl",              affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
-    list( firstname = "Sofia J.",  lastname = "van Moorsel",       affiliation = "University of Zurich", orcid = "0000-0003-1947-8971", type = "DataCollector"),
-    list( firstname = "Uriah",     lastname = "Daugaard",          affiliation = "University of Zurich", orcid = "0000-0003-4092-717X", type = "ProjectLeader"), # << types TODO
-    list( firstname = "Yves",      lastname = "Choffat",           affiliation = "University of Zurich", orcid = "",                    type = "DataCollector"),
-    list( firstname = "Zheng",     lastname = "Xue",               affiliation = "University of Zurich", orcid = "",                    type = "DataCollector")
-  ),
-  grants = "10.13039/501100001711::310030_188431" # This is the grant ID of the NRE grant of the NRF grant
+  # embargo_date = as.Date("2030-01-13"),
+  # license = "CC-BY-SA-4.0",
+  contributor = list(
+    list( 
+      name = "Anubhav Gupta",             
+      affiliation = "University of Zurich", 
+      orcid = "0000-0001-7977-9747", 
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Debra Zuppinger-Dingley", 
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-4573-0563", 
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Frank Pennekamp",         
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Martina Jelic",             
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Owen L. Petchey",           
+      affiliation = "University of Zurich",
+       orcid = "0000-0002-7724-1633", 
+       type = "ProjectLeader" # << types TODO
+    ), 
+    list( 
+      name = "Rainer M. Krug",              
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-7490-0066", 
+      type = c("DataCurator", "DataManager")
+    ),
+    list( 
+      name = "Romana Limberger",         
+      affiliation = "University of Zurich", 
+      orcid = "0000-0002-9421-7520", 
+      type = "ProjectLeader" # << types TODO
+    ),
+    list( 
+      name = "Sabina Jyrkinen",          
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Seraina Nohl",              
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Sofia J. van Moorsel",       
+      affiliation = "University of Zurich", 
+      orcid = "0000-0003-1947-8971", 
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Uriah Daugaard",          
+      affiliation = "University of Zurich", 
+      orcid = "0000-0003-4092-717X", 
+      type = "ProjectLeader" # << types TODO
+    ),
+    list( 
+      name = "Yves Choffat",           
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    ),
+    list( 
+      name = "Zheng Xue",               
+      affiliation = "University of Zurich", 
+      orcid = "",                    
+      type = "DataCollector"
+    )
+  )
+  # grants = "10.13039/501100001711::310030_188431" # This is the grant ID of the NRE grant of the NRF grant
 )
 
 ```

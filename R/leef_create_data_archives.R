@@ -3,8 +3,10 @@
 #' The data packages contain only of the respective data, bundled in a zipped file.
 #' @param to_dir directory in which the compressed data folders should be saved to
 #' @param data_dir base directory of the data archive
-#' @param stage stage of the data. Allowed values are \code{"pre_processed"}, \code{"extracted"} or \code{c("pre_processed", "extracted")}
-#' @param cores number of cores to be used for the parallel compression (default is one due to limits in connection)
+#' @param stage stage of the data. Allowed values are \code{"pre_processed"},
+#'   \code{"extracted"} or \code{c("pre_processed", "extracted")}
+#' @param cores number of cores to be used for the parallel compression (default
+#'   is one due to limits in connection)
 #'
 #' @return names of the created data zip archives
 #'
@@ -16,10 +18,7 @@ leef_create_data_archives <- function(
     data_dir = "~/Duck/LEEFSwift3/LEEF/3.archived.data",
     metadata_dir = "/Volumes/LEEF/LEEF-1.metadata",
     stage = c("pre_processed", "extracted"),
-    cores = 1
-){
-
-
+    cores = 1) {
   if (length(stage) > 1) {
     lapply(
       stage,
@@ -43,20 +42,18 @@ leef_create_data_archives <- function(
   # Helper function - comp --------------------------------------------------
 
 
-  comp <- function(datapath, files, zipfile){
+  comp <- function(datapath, files, zipfile) {
     # zip -9X ~/tmp/data_20220406.zip  *.20220406/*
 
     olddir <- getwd()
     result <- NULL
-    on.exit(
-      {
-        setwd(olddir)
-        if (is.null(result)){
-          unlink(zipfile)
-        }
-        return(result)
+    on.exit({
+      setwd(olddir)
+      if (is.null(result)) {
+        unlink(zipfile)
       }
-    )
+      return(result)
+    })
 
     dir.create(dirname(zipfile), showWarnings = FALSE, recursive = TRUE)
 
@@ -74,7 +71,7 @@ leef_create_data_archives <- function(
   # get datapath and timestamps ---------------------------------------------
 
 
-  datapath  <- file.path(
+  datapath <- file.path(
     data_dir,
     stage
   )
@@ -87,7 +84,7 @@ leef_create_data_archives <- function(
   message("\nSetting up compression\n")
   archives <- pbmcapply::pbmclapply(
     timestamps,
-    function(timestamp){
+    function(timestamp) {
       list(
         timestamp = timestamp,
         zipfile = file.path(
