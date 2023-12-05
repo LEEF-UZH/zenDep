@@ -15,12 +15,14 @@ Description: Deposits of data on Zenodo.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
-    R (>= 4.1.0)
+  R (>= 4.1.0),
+  deposits (>= 0.2.1.046),
+  here
 Imports:
   utils,
   pbmcapply,
-  yaml,
-  deposits (>= 0.2.1.046)
+  yaml
 Remotes: 
   r-universe/deposits
   RoxygenNote: 7.2.3
+RoxygenNote: 7.2.3

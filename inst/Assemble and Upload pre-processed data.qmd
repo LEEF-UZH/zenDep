@@ -1,3 +1,4 @@
+---
 title: "Assemble and Upload pre-processed data"
 author: "Rainer M. Krug"
 format: 
@@ -15,9 +16,10 @@ params:
   metadata_pre_processed: "~/git/LEEF/LEEF.metadata/metadata_pre_processed.zip"
   metadata_extracted: "~/git/LEEF/LEEF.metadata/metadata_extracted.zip"
   data_package_dir: "/Volumes/LEEF-1_archive/Data Packages/"
-  prepare: FALSE
-  publish: FALSE
-  sandbox: TRUE
+  prepare: false
+  publish: false
+  sandbox: true
+  metadata_file: "metadata_LEEF_1.json"
 ---
 
 
@@ -28,12 +30,15 @@ This document assembles and publishes the pre-processed data and adds the metada
 Depending on the settings of `prepare` and `publish`, the data is prepared and / or published in the Zenodo Sandbox (`sandbox: TRUE`) or in the Zenodo repository. This should only be enabled if absolutely sure that everything is complete for publication. Data will be published as **Embargoed** until **WHICH TIME?**.
 
 ```{r}
+#| label: setup
+#| 
 
 if (!exists("params")) {
-   params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/LEEF/additionalPackages/zenDep/inst/Assemble and Upload pre-processed data.qmd')$params
+    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/LEEF/additionalPackages/zenDep/inst/Assemble and Upload pre-processed data.qmd")$params
 }
 
-library(deposits)
+devtools::load_all(here::here())
+
 cli <- depositsClient$new (service = "zenodo", sandbox = params$sandbox)
 ```
 
@@ -42,136 +47,25 @@ The following parameter will be used (explained later in the document):
 ```{r}
 params
 ```
+
 ## Define bibliomteric metadata
 
-This biblimetric metadata is not part of the data package, but the metdata of the data package as entered in Zenodo. 
-It can be changed afterwards without generating a new DOI.
+The bibliometric metadata is defined in the file `r system.file(package = "zenDep", params$metadata_file)`.
+
+We will add the metadata to the daposit client
 ```{r}
-#| label: define_metadata_bib
+cli <- depositsClient$new(service = "zenodo", sandbox = params$sandbox)
 
-metadata_bib <- new_metadata_bib(
-  title = "LEEF-1 experiment",
-  description = "Description of the data",
-  subject = list(
-    a = "LEEZ-UZH", 
-    b = "LEEF-1"
-  ),
-  # keywords = c("LEEZ-UZH", "LEEF-1"),
-  # community = "leef-uzh",
-  # upload_type = "dataset",
-  creator = list(
-    list( 
-      name = "Romana Limberger",         
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-9421-7520"),
-    list( 
-      name = "Uriah Daugaard",          
-      affiliation = "University of Zurich", 
-      orcid = "0000-0003-4092-717X"),
-    list( 
-      name = "Rainer M. Krug",              
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-7490-0066"),
-    list( 
-      name = "Owen L. Petchey",           
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-7724-1633")
-  ),
-  # version = "1.0.0",
-  language = "eng",
-  accessRights = 'embargoed',
-  license = "CC-BY-SA-4.0",
-  # embargo_date = as.Date("2030-01-13"),
-  # license = "CC-BY-SA-4.0",
-  contributor = list(
-    list( 
-      name = "Anubhav Gupta",             
-      affiliation = "University of Zurich", 
-      orcid = "0000-0001-7977-9747", 
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Debra Zuppinger-Dingley", 
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-4573-0563", 
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Frank Pennekamp",         
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Martina Jelic",             
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Owen L. Petchey",           
-      affiliation = "University of Zurich",
-       orcid = "0000-0002-7724-1633", 
-       type = "ProjectLeader" # << types TODO
-    ), 
-    list( 
-      name = "Rainer M. Krug",              
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-7490-0066", 
-      type = c("DataCurator", "DataManager")
-    ),
-    list( 
-      name = "Romana Limberger",         
-      affiliation = "University of Zurich", 
-      orcid = "0000-0002-9421-7520", 
-      type = "ProjectLeader" # << types TODO
-    ),
-    list( 
-      name = "Sabina Jyrkinen",          
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Seraina Nohl",              
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Sofia J. van Moorsel",       
-      affiliation = "University of Zurich", 
-      orcid = "0000-0003-1947-8971", 
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Uriah Daugaard",          
-      affiliation = "University of Zurich", 
-      orcid = "0000-0003-4092-717X", 
-      type = "ProjectLeader" # << types TODO
-    ),
-    list( 
-      name = "Yves Choffat",           
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    ),
-    list( 
-      name = "Zheng Xue",               
-      affiliation = "University of Zurich", 
-      orcid = "",                    
-      type = "DataCollector"
-    )
-  )
-  # grants = "10.13039/501100001711::310030_188431" # This is the grant ID of the NRE grant of the NRF grant
-)
+metadata <- system.file(
+        package = "zenDep",
+        params$metadata_file
+    ) |>
+    jsonlite::read_json()
+    
+# And filter oput al fields starting with "_" as they are considered comments
+metadata <- metadata[grep("^_", names(metadata), invert = TRUE)]
 
-```
-
-which will result in the following bibliometric metadata for the deposits:
-
-```{r}
-metadata_bib
+cli$deposit_fill_metadata(metadata)
 ```
 
 ## Prepare data packages
@@ -183,13 +77,13 @@ If `parms$prepare == FALSE`, nothing will be done and the data packaged will be 
 #| label: prepare_data_packages
 
 if (params$prepare) {
-  leef_create_data_archives(
-    to_dir = params$data_package_dir,
-    data_dir = params$data_dir,
-    stage = params$prepare_stage,
-    cores = params$cores
-  )
-}  
+    leef_create_data_archives(
+        to_dir = params$data_package_dir,
+        data_dir = params$data_dir,
+        stage = params$prepare_stage,
+        cores = params$cores
+    )
+}
 ```
 
 ## Check data deposits and publish to Zenodo
@@ -201,8 +95,8 @@ The following timestamps will be deposited
 #| label: determine_timestamps
 
 timestamps <- list.files(params$data_package_dir) |>
-  (\(.) substr(., start = nchar(.)-11, stop = nchar(.) - 4))() |>
-  unique()
+    (\(.) substr(., start = nchar(.) - 11, stop = nchar(.) - 4))() |>
+    unique()
 timestamps
 ```
 
@@ -210,21 +104,21 @@ timestamps
 
 The pre-processed data packages are expected in the directory ``r params$data_package_dir``.
 ```{r}
-#| label: check_pre_processed 
+#| label: check_pre_processed
 #| results: asis
-#| 
+#|
 OK <- TRUE
 
 fe <- file.path(params$data_package_dir, paste0("data_pre_processed_", timestamps, ".zip")) |>
-  file.exists()
+    file.exists()
 if (all(fe)) {
-  pp_missing <- character(0)
-  cat("All pre_processed data packages availabable!")
+    pp_missing <- character(0)
+    cat("All pre_processed data packages availabable!")
 } else {
-  pp_missing <- paste0("data_pre_processed_", timestamps[!fe], ".zip")
-  cat("**Missing pre_processed data packages!**\n\n")
-  print(pp_missing)
-  OK <- FALSE
+    pp_missing <- paste0("data_pre_processed_", timestamps[!fe], ".zip")
+    cat("**Missing pre_processed data packages!**\n\n")
+    print(pp_missing)
+    OK <- FALSE
 }
 rm(fe)
 ```
@@ -237,15 +131,15 @@ The extracted data packages are expected in the directory ``r params$data_packag
 #| results: asis
 
 fe <- file.path(params$data_package_dir, paste0("data_extracted_", timestamps, ".zip")) |>
-  file.exists()
+    file.exists()
 if (all(fe)) {
-  ex_missing <- character(0)
-  cat("All pre-extracted data packages availabable!")
+    ex_missing <- character(0)
+    cat("All pre-extracted data packages availabable!")
 } else {
-  ex_missing <- paste0("data_extracted_", timestamps[!fe], ".zip")
-  cat("**ERROR: Missing extracted data packages!**\n\n")
-  print(ex_missing)
-  OK <- FALSE
+    ex_missing <- paste0("data_extracted_", timestamps[!fe], ".zip")
+    cat("**ERROR: Missing extracted data packages!**\n\n")
+    print(ex_missing)
+    OK <- FALSE
 }
 rm(fe)
 ```
@@ -258,10 +152,10 @@ The pre-processed metadata id expected at ``r params$metadata_pre_processed``.
 #| results: asis
 
 if (file.exists(params$metadata_pre_processed)) {
-  cat("Pre_processed metadata package availabable!")
+    cat("Pre_processed metadata package availabable!")
 } else {
-  cat("**ERROR: Missing Pre_processed metadata package!**")
-  OK <- FALSE
+    cat("**ERROR: Missing Pre_processed metadata package!**")
+    OK <- FALSE
 }
 ```
 
@@ -273,10 +167,10 @@ The extracted metadata id expected at ``r params$metadata_extracted``.
 #| results: asis
 
 if (file.exists(params$metadata_extracted)) {
-  cat("extracted metadata package availabable!")
+    cat("extracted metadata package availabable!")
 } else {
-  cat("**ERROR: Missing extracted metadata package!**")
-  OK <- FALSE
+    cat("**ERROR: Missing extracted metadata package!**")
+    OK <- FALSE
 }
 ```
 
@@ -287,11 +181,11 @@ Here we check if the environmental variable `ZENODO_PAT` is set, which is necess
 #| label: chech_ZENODO_PAT
 #| results: asis
 
-if (!is.null(zen4R:::zenodo_pat())){
-  cat("Environmental variable `ZENODO_PAT` is set!")
+if (!is.null(zen4R:::zenodo_pat())) {
+    cat("Environmental variable `ZENODO_PAT` is set!")
 } else {
-  cat("**ERROR: Environmental variable `ZENODO_PAT` is not set!**")
-  OK <- FALSE
+    cat("**ERROR: Environmental variable `ZENODO_PAT` is not set!**")
+    OK <- FALSE
 }
 ```
 
@@ -308,19 +202,19 @@ cat("**All following processing is skipped as the input data or metadata is not 
 
 Here the data packages and the related metadata is uploads them to Zenodo (if `params$sandbox == TRUE` to the sandbox, the value is ``r params$sandbox``) using the bibliometric metadata, and DOIs are generated.
 ```{r}
-#| label: deposit 
+#| label: deposit
 #| eval: !expr OK
 pbmcapply::pbmclapply(
-  X = timestamps,
-  FUN = leef_deposit,
-  token = zen4R:::zenodo_pat(),
-  data_package_dir = params$data_package_dir,
-  metadata_extracted = params$metadata_extracted,
-  metadata_pre_processed = params$metadata$pre_processed,
-  metadata_bib = metadata_bib,
-  publish = params$publish,
-  sandbox = params$sandbox #,
-  # mc.cores = params$cores
+    X = timestamps,
+    FUN = leef_deposit,
+    token = zen4R:::zenodo_pat(),
+    data_package_dir = params$data_package_dir,
+    metadata_extracted = params$metadata_extracted,
+    metadata_pre_processed = params$metadata$pre_processed,
+    metadata_bib = metadata_bib,
+    publish = params$publish,
+    sandbox = params$sandbox # ,
+    # mc.cores = params$cores
 )
 ```
 

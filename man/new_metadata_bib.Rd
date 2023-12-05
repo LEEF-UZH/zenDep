@@ -7,24 +7,18 @@
 new_metadata_bib(
   title = "Some Title",
   description = "Description of the data",
-  keywords = c("LEEZ-UZH", "LEEF-1"),
-  community = "leef-uzh",
-  upload_type = "dataset",
-  authors = list(RMK = list(firstname = "Rainer M", lastname = "Krug", affiliation =
-    "University of Zurich", orcid = "0000-0002-7490-0066"), OLP = list(firstname =
-    "Owen L", lastname = "Petchey", affiliation = "University of Zurich", orcid =
-    "0000-0002-7724-1633")),
-  version = "1.0.0",
+  subject = list(a = "LEEZ-UZH", b = "LEEF-1"),
+  creator = list(RMK = list(name = "Rainer M Krug", affiliation = "University of Zurich",
+    orcid = "0000-0002-7490-0066"), OLP = list(name = "Owen L Petchey", affiliation =
+    "University of Zurich", orcid = "0000-0002-7724-1633")),
   language = "eng",
-  access_right = "embargoed",
-  embargo_date = as.Date("2030-01-13"),
+  accessRights = "embargoed",
   license = "CC-BY-SA-4.0",
-  contributors = list(RMK = list(firstname = "Rainer M", lastname = "Krug", type =
-    c("DataManager", "Software"), affiliation = "University of Zurich", orcid =
-    "0000-0002-7490-0066"), OLP = list(firstname = "Owen L", lastname = "Petchey", type =
-    "ProjectLeader", affiliation = "University of Zurich", orcid =
-    "0000-0002-7724-1633")),
-  grants = "some names of the grant"
+  contributor = list(RMK = list(name = "Rainer M Krug", type = c("DataManager",
+    "Software"), affiliation = "University of Zurich", orcid = "0000-0002-7490-0066"),
+    OLP = list(name = "Owen L Petchey", type = "ProjectLeader", affiliation =
+    "University of Zurich", orcid = "0000-0002-7724-1633")),
+  isPartOf = NULL
 )
 }
 \arguments{
@@ -32,28 +26,16 @@ new_metadata_bib(
 
 \item{description}{description of the deposited data}
 
-\item{keywords}{\code{character} vector with keywords}
-
-\item{upload_type}{type of the deposited data}
-
-\item{authors}{authors of the deposited data. Each contributor is also a list
-with the following fields:
-\itemize{
-\item firstname
-\item lastname
-\item affiliation
-\item orcid
-}}
-
-\item{version}{version of the deposited data}
+\item{subject}{\code{character} vector with keywords
+the deposited data should be added to,}
 
 \item{language}{language of the deposited data}
 
-\item{access_right}{access right of the deposited data}
+\item{accessRights}{access right of the deposited data}
 
 \item{license}{license of the deposited data}
 
-\item{contributors}{list of contributors of the deposited data. Each
+\item{contributor}{list of contributors of the deposited data. Each
 contributor is also a list with the following fields:
 \itemize{
 \item firstname
@@ -64,10 +46,7 @@ be expanded for submission to Zenodo
 \item orcid
 }}
 
-\item{communities}{\code{character} vector containing the community idsto which
-the deposited data should be added to,}
-
-\item{embargo_data}{date until which the data is embargoed if \code{access_right}
+\item{embargo_data}{date until which the data is embargoed if \code{accessRights}
 is "embargoed"}
 }
 \value{

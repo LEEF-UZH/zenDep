@@ -68,9 +68,9 @@ new_metadata_bib <- function(
         affiliation = "University of Zurich",
         orcid = "0000-0002-7724-1633"
       )
-    )
-    # grants = "some names of the grant"
-    ) {
+    ),
+    # grants = "some names of the grant",
+    isPartOf = NULL) {
   # Expand contributor when more than one type (role) is specified ---------
 
 
@@ -105,8 +105,9 @@ new_metadata_bib <- function(
     accessRights = accessRights,
     # embargo_date = embargo_date,
     license = license,
-    contributor = contributor
-    # grants = grants
+    contributor = contributor,
+    # grants = grants,
+    isPartOf = isPartOf
   )
 
 
