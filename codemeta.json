@@ -13,7 +13,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
+  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
   "author": [
     {
       "@type": "Person",
@@ -45,10 +45,28 @@
     },
     "2": {
       "@type": "SoftwareApplication",
+      "identifier": "deposits",
+      "name": "deposits",
+      "version": ">= 0.2.1.046"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "here",
+      "name": "here",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=here"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
       "identifier": "utils",
       "name": "utils"
     },
-    "3": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "pbmcapply",
       "name": "pbmcapply",
@@ -60,7 +78,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=pbmcapply"
     },
-    "4": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "yaml",
       "name": "yaml",
@@ -72,20 +90,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=yaml"
     },
-    "5": {
-      "@type": "SoftwareApplication",
-      "identifier": "zen4R",
-      "name": "zen4R",
-      "version": ">= 0.7.1",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=zen4R"
-    },
     "SystemRequirements": null
   },
-  "fileSize": "661.465KB"
+  "fileSize": "49.304KB"
 }

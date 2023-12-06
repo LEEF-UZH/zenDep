@@ -3,5 +3,6 @@
 ^codemeta\.json$
 
 ^Makefile$
+^\.lintr$
 ^inst/.*\.html$
 ^Meta$

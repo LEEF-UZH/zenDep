@@ -1,5 +1,6 @@
-#' Create the data packages from the LEEF project.
+#' Create the data packages from the LEEF project per day.
 #'
+#' THIS FUNCTION IS LEFT HERE FOR COMPLETENESS AND DEPRECATED.
 #' The data packages contain only of the respective data, bundled in a zipped file.
 #' @param to_dir directory in which the compressed data folders should be saved to
 #' @param data_dir base directory of the data archive
@@ -13,7 +14,7 @@
 #' @importFrom pbmcapply pbmclapply
 #' @export
 #'
-leef_create_data_archives <- function(
+leef_create_data_archives_per_day <- function(
     to_dir = ".",
     data_dir = "~/Duck/LEEFSwift3/LEEF/3.archived.data",
     metadata_dir = "/Volumes/LEEF/LEEF-1.metadata",
@@ -23,7 +24,7 @@ leef_create_data_archives <- function(
     lapply(
       stage,
       function(s) {
-        leef_create_data_archives(
+        leef_create_data_archives_per_day(
           to_dir = to_dir,
           data_dir = data_dir,
           stage = stage,
