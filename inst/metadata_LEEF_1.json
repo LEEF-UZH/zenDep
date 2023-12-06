@@ -5,9 +5,9 @@
   "abstract": "The data from the LEEF-1 experiment.",
   "_created": "2020-01-01",
   "language": "eng",
-  "_accessRights": "embargoed.",
+  "accessRights": "embargoed",
   "_rightsHolder": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.",
-  "license": "CC-BY-SA-4.0",
+  "_license": "CC-BY-SA-4.0",
   "creator": [
     {
       "name": "Romana Limberger",
