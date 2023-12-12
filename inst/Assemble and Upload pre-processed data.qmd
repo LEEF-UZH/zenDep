@@ -18,7 +18,7 @@ params:
   data_package_dir: "/Volumes/LEEF-1_archive/Data Packages/"
   prepare: false
   publish: false
-  sandbox: true
+  sandbox: false
   metadata_file: "metadata_LEEF_1.json"
 ---
 
@@ -31,15 +31,13 @@ Depending on the settings of `prepare` and `publish`, the data is prepared and /
 
 ```{r}
 #| label: setup
-#| 
+#|
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/LEEF/additionalPackages/zenDep/inst/Assemble and Upload pre-processed data.qmd")$params
+    params <- rmarkdown::yaml_front_matter(here::here("inst", "Assemble and Upload pre-processed data.qmd"))$params
 }
 
 devtools::load_all(here::here())
-
-cli <- depositsClient$new (service = "zenodo", sandbox = params$sandbox)
 ```
 
 The following parameter will be used (explained later in the document):
@@ -54,19 +52,30 @@ The bibliometric metadata is defined in the file `r system.file(package = "zenDe
 
 We will add the metadata to the daposit client
 ```{r}
-cli <- depositsClient$new(service = "zenodo", sandbox = params$sandbox)
 
 metadata <- system.file(
-        package = "zenDep",
-        params$metadata_file
-    ) |>
+    package = "zenDep",
+    params$metadata_file
+) |>
     jsonlite::read_json()
-    
-# And filter oput al fields starting with "_" as they are considered comments
+
+# And filter out al fields starting with "_" as they are considered comments
+# This is hopefully integrated in the next release of `deposits`
+
 metadata <- metadata[grep("^_", names(metadata), invert = TRUE)]
 
+cli <- depositsClient$new(service = "zenodo", sandbox = params$sandbox)
+
 cli$deposit_fill_metadata(metadata)
+cli$deposit_new()
+# cli$deposit_embargo(embargo_date = "2030-03-30")
 ```
+
+The following needs to be done on Zenodo in the unpublished deposit:
+
+- Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
+- Set Embargoed until 2026.01.01 - Reason: Paper not yet published
+- Keywords: forecast, microcosm, ecological
 
 ## Prepare data packages
 Now the data packages will be prepared and named accordingly if `parms$prepare == TRUE`. The original data is located in ``r params$data_dir`` and saved in the directory ``r params$data_package_dir``. 
@@ -77,7 +86,7 @@ If `parms$prepare == FALSE`, nothing will be done and the data packaged will be 
 #| label: prepare_data_packages
 
 if (params$prepare) {
-    leef_create_data_archives(
+    leef_create_data_archives_per_method(
         to_dir = params$data_package_dir,
         data_dir = params$data_dir,
         stage = params$prepare_stage,
