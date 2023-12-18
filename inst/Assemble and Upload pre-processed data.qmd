@@ -17,7 +17,6 @@ params:
   metadata_extracted: "~/git/LEEF/LEEF.metadata/metadata_extracted.zip"
   data_package_dir: "/Volumes/LEEF-1_archive/Data Packages/"
   prepare: false
-  publish: false
   sandbox: false
   metadata_file: "metadata_LEEF_1.json"
 ---
@@ -46,13 +45,11 @@ The following parameter will be used (explained later in the document):
 params
 ```
 
-## Define bibliomteric metadata
-
+## Create Deposit as unpublished draft
 The bibliometric metadata is defined in the file `r system.file(package = "zenDep", params$metadata_file)`.
 
 We will add the metadata to the daposit client
 ```{r}
-
 metadata <- system.file(
     package = "zenDep",
     params$metadata_file
@@ -64,18 +61,97 @@ metadata <- system.file(
 
 metadata <- metadata[grep("^_", names(metadata), invert = TRUE)]
 
-cli <- depositsClient$new(service = "zenodo", sandbox = params$sandbox)
-
-cli$deposit_fill_metadata(metadata)
-cli$deposit_new()
-# cli$deposit_embargo(embargo_date = "2030-03-30")
+cli <- depositsClient$new(
+    service = "zenodo",
+    sandbox = params$sandbox
+)
 ```
 
-The following needs to be done on Zenodo in the unpublished deposit:
+### RRD
 
-- Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
-- Set Embargoed until 2026.01.01 - Reason: Paper not yet published
-- Keywords: forecast, microcosm, ecological
+#### LEEF-1 Density
+```{r}
+#| eval: false
+#|
+metadata$title #| <- "LEEF-1 experiment Density Data"
+metadata$description <- "Density data sampled during the LEEF-1 experiment. The dataset has been created by rendering the report https://github.com/LEEF-UZH/LEEF.analysis/blob/c46c3ae1c232ddd85422683655a7cd9414eb7fe8/inst/LEEF-1/Reclassification_and_Data_Cleaning.qmd in https://doi.org/10.5281/zenodo.10400510"
+cli$deposit_fill_metadata(metadata)
+cli$deposit_new()
+```
+
+The following needs to be done on Zenodo in the unpublished draft Please open this link [after logging into Zenodo](https://zenodo.org/me/uploads?q=&l=list&p=1&s=10&sort=newest):
+
+- [x] Set Embargoed until 2026-01-01 - Reason: Finalisation of Project and Publications
+- [x] Add Resource Type: Dataset
+- [x] add version 1.0.0
+- [x] Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
+- [x] Keywords: microcosm, ecological forecast
+- [ ] upload deposit and deposit metadata
+
+[Reserved DOI: 10.5281/zenodo.10400747](https://zenodo.org/uploads/10400747)
+
+#### LEEF-1 Density and Traits
+```{r}
+#| eval: false
+#|
+metadata$title <- "LEEF-1 experiment Density and Trait Data"
+metadata$description <- "Density and Trait data sampled during the LEEF-1 experiment. The dataset has been created by rendering the report https://github.com/LEEF-UZH/LEEF.analysis/blob/c46c3ae1c232ddd85422683655a7cd9414eb7fe8/inst/LEEF-1/Reclassification_and_Data_Cleaning.qmd in https://doi.org/10.5281/zenodo.10400510"
+cli$deposit_fill_metadata(metadata)
+cli$deposit_new()
+```
+
+The following needs to be done on Zenodo in the unpublished draft Please open this link [after logging into Zenodo](https://zenodo.org/me/uploads?q=&l=list&p=1&s=10&sort=newest):
+
+- [x] Set Embargoed until 2026-01-01 - Reason: Finalisation of Project and Publications
+- [x] Add Resource Type: Dataset
+- [x] add version 1.0.0
+- [x] Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
+- [x] Keywords: microcosm, ecological forecast
+- [ ] upload deposit and deposit metadata
+
+[Reserved DOI: 10.5281/zenodo.10400742](https://zenodo.org/uploads/10400742)
+
+#### LEEF-2 Density
+```{r}
+#| eval: false
+#|
+metadata$title <- "LEEF-2 experiment Density Data"
+metadata$description <- "Density data sampled during the LEEF-2 experiment. The dataset has been created by rendering the report https://github.com/LEEF-UZH/LEEF.analysis/blob/62686d094eb8041d32960738cd4565d5485b8a2b/inst/LEEF-2/LEEF-2%20Reclassification_and_Data_Cleaning.qmd in https://doi.org/10.5281/zenodo.10400510"
+cli$deposit_fill_metadata(metadata)
+cli$deposit_new()
+```
+
+The following needs to be done on Zenodo in the unpublished draft Please open this link [after logging into Zenodo](https://zenodo.org/me/uploads?q=&l=list&p=1&s=10&sort=newest):
+
+- [x] Set Embargoed until 2026-01-01 - Reason: Finalisation of Project and Publications
+- [x] Add Resource Type: Dataset
+- [x] Keywords: microcosm, ecological forecast
+- [x] add version 1.0.0
+- [x] Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
+- [ ] upload deposit and deposit metadata
+
+[Reserved DOI: 10.5281/zenodo.10400749](https://zenodo.org/uploads/10400749)
+
+#### LEEF-2 Density and Traits
+```{r}
+#| eval: false
+#|
+metadata$title <- "LEEF-2 experiment Density and TraitData"
+metadata$description <- "Density and Trait data sampled during the LEEF-2 experiment. The dataset has been created by rendering the report https://github.com/LEEF-UZH/LEEF.analysis/blob/62686d094eb8041d32960738cd4565d5485b8a2b/inst/LEEF-2/LEEF-2%20Reclassification_and_Data_Cleaning.qmd in https://doi.org/10.5281/zenodo.10400510"
+cli$deposit_fill_metadata(metadata)
+cli$deposit_new()
+```
+
+The following needs to be done on Zenodo in the unpublished draft Please open this link [after logging into Zenodo](https://zenodo.org/me/uploads?q=&l=list&p=1&s=10&sort=newest):
+
+- [x] Set Embargoed until 2026-01-01 - Reason: Finalisation of Project and Publications
+- [x] Add Resource Type: Dataset
+- [x] add version
+- [x] Add grant "Advancing the limits of ecological forecasting in changing environments using very long-term experimentation with micro-ecosystems"
+- [x] Keywords: microcosm, ecological forecast
+- [ ] upload deposit and deposit metadata
+
+[Reserved DOI: 10.5281/zenodo.10400896](https://zenodo.org/uploads/10400896)
 
 ## Prepare data packages
 Now the data packages will be prepared and named accordingly if `parms$prepare == TRUE`. The original data is located in ``r params$data_dir`` and saved in the directory ``r params$data_package_dir``. 
