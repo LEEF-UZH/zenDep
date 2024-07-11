@@ -24,5 +24,4 @@ Imports:
   yaml
 Remotes: 
   r-universe/deposits
-  RoxygenNote: 7.2.3
 RoxygenNote: 7.2.3
